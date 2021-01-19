@@ -10,6 +10,7 @@ import org.pac4j.core.profile.jwt.JwtClaims;
 import org.pac4j.oidc.profile.converter.OidcLongTimeConverter;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * This class defines the attributes of the OpenID Connect profile: http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
@@ -49,7 +50,11 @@ public class OidcProfileDefinition extends CommonProfileDefinition {
     public static final String EXPIRATION               = "expiration";
 
     public OidcProfileDefinition() {
-        super(x -> new OidcProfile());
+        this(Optional.ofNullable(null));
+    }
+
+    public OidcProfileDefinition(final Optional<String> claimAsUsername) {
+        super(x -> new OidcProfile(claimAsUsername));
         Arrays.stream(new String[] {NAME, GIVEN_NAME, MIDDLE_NAME, NICKNAME, PREFERRED_USERNAME, WEBSITE,
                 PHONE_NUMBER, ZONEINFO, ID_TOKEN}).forEach(a -> primary(a, Converters.STRING));
         primary(PROFILE, Converters.URL);

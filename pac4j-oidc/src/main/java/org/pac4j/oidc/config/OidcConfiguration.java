@@ -135,6 +135,11 @@ public class OidcConfiguration extends BaseClientConfiguration {
 
     private TokenValidator tokenValidator;
 
+    /**
+     * claim to use as username
+     */
+    private String claimAsUsername;
+
     @Override
     protected void internalInit() {
         // checks
@@ -471,6 +476,14 @@ public class OidcConfiguration extends BaseClientConfiguration {
             setTokenValidator(new TokenValidator(this));
         }
         return tokenValidator;
+    }
+
+    public String getClaimAsUsername() {
+        return claimAsUsername;
+    }
+
+    public void setClaimAsUsername(String claimAsUsername) {
+        this.claimAsUsername = claimAsUsername;
     }
 
     @Override
