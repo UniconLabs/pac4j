@@ -12,6 +12,7 @@ import java.net.URI;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * <p>This class is the user profile for sites using OpenID Connect protocol.</p>
@@ -24,7 +25,19 @@ public class OidcProfile extends AbstractJwtProfile {
 
     private static final long serialVersionUID = -52855988661742374L;
 
-    public OidcProfile() { }
+    private final Optional<String> claimAsUsername;
+
+    public OidcProfile() {
+        this(Optional.ofNullable(null));
+    }
+
+    public OidcProfile(final String claimAsUsername) {
+        this.claimAsUsername = Optional.ofNullable(claimAsUsername);
+    }
+
+    public OidcProfile(final Optional<String> optionalClaimAsUsername) {
+        this.claimAsUsername = optionalClaimAsUsername;
+    }
 
     @Override
     public String getFirstName() {
@@ -46,7 +59,7 @@ public class OidcProfile extends AbstractJwtProfile {
 
     @Override
     public String getUsername() {
-        return (String) getAttribute(OidcProfileDefinition.PREFERRED_USERNAME);
+        return (String) getAttribute(this.claimAsUsername.orElse(OidcProfileDefinition.PREFERRED_USERNAME));
     }
 
     @Override
