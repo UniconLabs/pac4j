@@ -24,7 +24,15 @@ public class OidcProfile extends AbstractJwtProfile {
 
     private static final long serialVersionUID = -52855988661742374L;
 
-    public OidcProfile() { }
+    private final String claimAsUsername;
+
+    public OidcProfile(String claimAsUsername) {
+        this.claimAsUsername = claimAsUsername;
+    }
+
+    public OidcProfile() {
+        this(null);
+    }
 
     @Override
     public String getFirstName() {
@@ -46,7 +54,7 @@ public class OidcProfile extends AbstractJwtProfile {
 
     @Override
     public String getUsername() {
-        return (String) getAttribute(OidcProfileDefinition.PREFERRED_USERNAME);
+        return (String) getAttribute(this.claimAsUsername != null ? this.claimAsUsername : OidcProfileDefinition.PREFERRED_USERNAME);
     }
 
     @Override

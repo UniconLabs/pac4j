@@ -55,7 +55,7 @@ public class UserInfoOidcAuthenticator extends InitializableObject implements Au
     public void validate(TokenCredentials credentials, WebContext context) {
         init();
 
-        final OidcProfileDefinition profileDefinition = new OidcProfileDefinition();
+        final OidcProfileDefinition profileDefinition = new OidcProfileDefinition(this.configuration.getClaimAsUsername());
         final OidcProfile profile = (OidcProfile) profileDefinition.newProfile();
         final BearerAccessToken accessToken = new BearerAccessToken(credentials.getToken());
         profile.setAccessToken(accessToken);

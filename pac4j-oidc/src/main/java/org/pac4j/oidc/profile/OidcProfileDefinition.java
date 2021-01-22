@@ -49,7 +49,11 @@ public class OidcProfileDefinition<P extends OidcProfile> extends CommonProfileD
     public static final String EXPIRATION               = "expiration";
 
     public OidcProfileDefinition() {
-        super(x -> (P) new OidcProfile());
+        this((String)null);
+    }
+
+    public OidcProfileDefinition(String claimAsUsername) {
+        super(x -> (P) new OidcProfile(claimAsUsername != null ? claimAsUsername : null));
         Arrays.stream(new String[] {NAME, GIVEN_NAME, MIDDLE_NAME, NICKNAME, PREFERRED_USERNAME, WEBSITE,
                 PHONE_NUMBER, ZONEINFO, ID_TOKEN}).forEach(a -> primary(a, Converters.STRING));
         primary(PROFILE, Converters.URL);
@@ -86,6 +90,11 @@ public class OidcProfileDefinition<P extends OidcProfile> extends CommonProfileD
 
     public OidcProfileDefinition(final ProfileFactory<P> profileFactory) {
         this();
+        setProfileFactory(profileFactory);
+    }
+
+    public OidcProfileDefinition(final String claimAsUsername, final ProfileFactory<P> profileFactory) {
+        this(claimAsUsername);
         setProfileFactory(profileFactory);
     }
 }

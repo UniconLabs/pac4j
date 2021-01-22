@@ -59,7 +59,7 @@ public class OidcProfileCreator<P extends OidcProfile> extends ProfileDefinition
     protected void internalInit() {
         assertNotNull("configuration", configuration);
 
-        defaultProfileDefinition(new OidcProfileDefinition<>());
+        defaultProfileDefinition(new OidcProfileDefinition<>(this.configuration.getClaimAsUsername()));
     }
 
     @Override
