@@ -54,7 +54,7 @@ public class OidcProfile extends AbstractJwtProfile {
 
     @Override
     public String getUsername() {
-        return (String) getAttribute(this.claimAsUsername != null ? this.claimAsUsername : OidcProfileDefinition.PREFERRED_USERNAME);
+        return getAttribute(this.claimAsUsername != null ? this.claimAsUsername : OidcProfileDefinition.PREFERRED_USERNAME).toString();
     }
 
     @Override
